@@ -1,17 +1,46 @@
-import tkinter as tk
+import pygame
 import get_values
-import time
 
-fenster = tk.Tk()
+pygame.init()
 
-core_temeratue = get_values.core_temperature()
-RAM_toal, RAM_used, RAM_free = get_values.RAM()
-RAM_percent_used = round(int(RAM_used)*100/int(RAM_toal),1)
+screen = pygame.display.set_mode((400, 300))
 
-tk.Label(text = "Core temerature: %s°C"%core_temeratue).pack()
-tk.Label(text = "Total RAM: %skb"%RAM_toal).pack()
-tk.Label(text = "Used RAM: %skb"%RAM_used).pack()
-tk.Label(text = "Free RAM: %skb"%RAM_free).pack()
-tk.Label(text = "Used RAM: %s%%"%RAM_percent_used).pack()
-time.sleep(1)
-fenster.mainloop()
+run = True
+
+font = pygame.font.SysFont("Arial", 20)
+
+while run:
+    
+    for event in  pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+            
+    screen.fill((0,0,0))
+    
+    core_temperature = font.render("Core temperature: %s°C"%get_values.core_temperature(), True, (0, 128, 0))
+    
+    RAM_total, RAM_used, RAM_free = get_values.RAM()
+    
+    Used_RAM_procent = round(int(RAM_used)*100/int(RAM_total), 1)
+    
+    RAM_total = font.render       ("Total RAM: %s"% RAM_total, True, (0, 128, 0))
+    RAM_used = font.render        ("Used RAM:  %s"% RAM_used, True, (0, 128, 0)) 
+    RAM_free = font.render        ("Free RAM:  %s"% RAM_free, True, (0, 128, 0))
+    
+    Used_RAM_procent = font.render("Free RAM:  %s%%"% Used_RAM_procent, True, (0, 128, 0))
+    
+    screen.blit(core_temperature,(0,0))
+    screen.blit(RAM_total,(0,20))
+    screen.blit(RAM_used,(0,40))
+    screen.blit(RAM_free,(0,60))
+    
+    screen.blit(Used_RAM_procent,(0,80))
+    
+    pygame.display.flip()
+    
+    pygame.time.wait(500)
+    
+pygame.quit()
+
+    
+    

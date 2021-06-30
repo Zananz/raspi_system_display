@@ -1,1 +1,1 @@
-test
+A pygame based skript that shows core temperature, used-, free-, and total RAM.
